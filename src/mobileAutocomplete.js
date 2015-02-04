@@ -1,6 +1,7 @@
 /**
  * Mobile Autocomplete
  * 轻量级（压缩后1.71KB）、适配移动设备的autocomplete插件
+ * https://github.com/IvinWu/mobileAutocomplete
  * @version 0.0.1
  */
 define("page/raider/strategy/mobileAutocomplete", function(require, exports, module){

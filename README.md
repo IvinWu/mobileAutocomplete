@@ -45,14 +45,16 @@ Javascript代码：
                 type: 'get',
                 dataType: 'jsonp',
                 success: function(data) {
-                  var array = [];
-                  for(var i = 0; i < data.length; i ++) {
-                    array.push({
-                      value: data[i],
-                      title: data[i]
-                    })
-                  }
-                  response(array);
+                    //由于接口返回的是数组[aa,bb,cc]，因此对其进行对象组装
+                    var array = [];
+                    for(var i = 0; i < data.length; i ++) {
+                        array.push({
+                            value: data[i],
+                            title: data[i]
+                        })
+                    }
+                    //将处理好的数组用response进行回调，此时数组格式为[{value:1,title:aa},{...}]
+                    response(array);
                 }
              })
         },
@@ -94,7 +96,7 @@ Javascript代码：
 
     autocomplete = require('./mobileAutocomplete');
 
-再调用其初始化函数init
+再调用初始化函数init
 
     autocomplete.init('input', settings);
 
@@ -111,21 +113,22 @@ parent默认值是body，即默认生成的下拉列表是会append到页面的b
 则可以在初始化的时候设定parent的值为 “#autocompleteUl”
 
 ####关于配置项ulTemplate和itemTemplate的说明
-ulTemplate的默认值是`<ul class="autocomplete-list"></ul>`，itemTemplate的默认值是`<li class="autocomplete-item">{{title}}</li>`，如有其他需求，如需上面举例的DMO结构，则在初始化时候设定
+ulTemplate的默认值是`<ul class="autocomplete-list"></ul>`，itemTemplate的默认值是`<li class="autocomplete-item">{{title}}</li>`，如有其他需求，如需上面举例的DOM结构，则可在初始化时候设定
 
     
     ulTemplate: '<ul class="search-list"></ul>',
     itemTemplate: '<li class="keyword">{{title}}</li>'
 
 ####关于配置项onSelect的说明
-该配置项为函数，指定了用户点击了某个下拉列表后应该要触发的事件，其中会带上一个参数，该参数为用户点击项的DOM对象，可通过往列表DOM中的属性种入各种自定义值，并在onSelect触发时从DOM属性中取出使用。如
+该配置项为函数，指定了用户点击了某个下拉列表后会触发的事件，其中带有一个参数el为用户点击项的DOM对象，可通过往列表DOM中的属性种入各种自定义值，并在onSelect触发时从DOM属性中取出使用。如
 
     onSelect: function(el) {
+	    //打印被选中的选项的value属性
 	    console.log(el.attr('value'))
     }
 
 ####关于配置项source的说明
-该配置项为函数，确定了与服务器之前的接口。该配置参照了jqueryui中的autocomplete，有两个参数request和response，其中request.term中装载着当前input的值，而返回的结果需要用response进行回调。
+该配置项为函数，确定了与服务器之前的接口。该配置参照了JqueryUI中的Autocomplete，有两个参数`request`和`response`，其中`request.term`中装载着当前input的值，而返回的结果需要用`response`进行回调。
 
     source: function(request, response) {
         $.ajax({
