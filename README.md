@@ -1,6 +1,6 @@
 # mobileAutocomplete
 
-传统autocomplete插件多数基于PC端，依赖jquery，体积庞大；本插件基于移动设备特性制作，遵循CMD规范，按需加载，且跟DOM元素基本解耦（DOM及样式可完全自定义），拓展性强，压缩后体积只有1.27KB，非常适合移动应用使用（依赖zeptojs，当然jquery也是可以的）。
+传统autocomplete插件多数基于PC端，依赖jquery，体积庞大；本插件基于移动设备特性制作，跟DOM元素基本解耦（DOM及样式可完全自定义），拓展性强，压缩后体积只有2KB，非常适合移动应用使用（依赖zeptojs，当然jquery也是可以的）。
 
 用户在输入框中输入内容的过程中，调用服务端接口，实时将匹配的内容返回并显示出下拉列表，提供给用户选择，提高用户的输入效率，在移动端打字不方便的背景下，该功能的需求非常庞大。
 
@@ -32,9 +32,7 @@ HTML代码：
 ```
 Javascript代码：
 ```javascript
-autocomplete = require('./mobileAutocomplete');
-...
-autocomplete.init('#city', {
+$('#city').mAutocomplete({
 	source: function(request, response) {
 		$.ajax({
 			url: 'http://gd.geobytes.com/AutoCompleteCity',
@@ -90,15 +88,7 @@ var defaults = {
 	parent: 'body'
 }
 ```
-####关于插件调用的说明
-本插件遵循CMD规范，按需加载，举例使用seajs，则使用require加载至变量
-```javascript
-autocomplete = require('./mobileAutocomplete');
-```
-再调用初始化函数init
-```javascript
-autocomplete.init('input', settings);
-```
+
 ####关于配置项parent的说明
 parent默认值是body，即默认生成的下拉列表是会append到页面的body下的，如有其他特殊需求，如DOM结构是这样的
 ```html
