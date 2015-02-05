@@ -152,5 +152,5 @@ onSelect: function(el) {
 答：为了保持代码的简洁性，本版本暂不支持该功能哈，考虑后续增加。
 
 
-  [1]: http://ivinjs.com/demo/mobileAutocomplete/demo.png
+  [1]: http://ivinjs.com/demo/mobileAutocomplete/demo3.png
   [2]: http://ivinjs.com/demo/mobileAutocomplete/code.png
