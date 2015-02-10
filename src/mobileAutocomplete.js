@@ -2,7 +2,7 @@
  * Mobile Autocomplete
  * 轻量级、适配移动设备的autocomplete插件
  * https://github.com/IvinWu/mobileAutocomplete
- * @version 0.1.0
+ * @version 0.0.1
  */
 (function(window, $) {
 
@@ -22,7 +22,7 @@
 		config: {
 			//当输入字符达minChars时，开始触发autocomplete
 			minChars: 2,
-	        //请求配置函数
+	        //数据源配置
 	        source: null,
 	        //选择选项后触发事件
 	        onSelect: null,
@@ -55,9 +55,16 @@
 	     * 初始化配置
 	     */
     	setupSettings: function() {
-	        if (this.config.keyboardDelay) {
+    		//如果配置source为数组，则request定义为对本地数组的筛选器
+    		if ($.isArray(this.config.source)) {
+    			this.request = function(val) {
+    				this.response(this.filter(this.config.source, val));
+    			}
+    		//如果source为远程请求且配置keyboardDelay不为0，则添加延迟触发请求
+    		} else if (this.config.keyboardDelay) {
 	            this.request = this.debounce(this.request, this.config.keyboardDelay);
 	        }
+	        //如果配置scrollOnFocus为true，则当输入框focus时，自动将输入框滚动到页面顶部（防止键盘阻挡）
 	        if (this.config.scrollOnFocus) {
 	        	var that = this;
 	            this.$el.on('focus', function() {
@@ -132,6 +139,18 @@
 	        }
 	    },
 	    /**
+	     * 借用$.ui.autocomplete的方法，用于匹配数据源为数组的情况
+	     */
+	    escapeRegex: function( value ) {
+			return value.replace( /[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&" );
+		},
+	    filter: function(array, term) {
+			var matcher = new RegExp( this.escapeRegex( term ), "i" );
+			return $.grep( array, function( value ) {
+				return matcher.test( value );
+			});
+		},
+	    /**
 	     * Micro-templating utility
 	     * @param  {string} template Template string with mustache-style curly braces
 	     * @param  {object} vars     Contains values to interpolate with
@@ -139,7 +158,7 @@
 	     */
 	    template: function(template, vars) {
 	        return template.replace(/{{\s*[\w]+\s*}}/g, function(v) {
-	            return vars[v.substr(2, v.length - 4)];
+	            return vars[v.substr(2, v.length - 4)] || vars;
 	        });
 	    },
 	    /**

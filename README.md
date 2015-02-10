@@ -31,6 +31,16 @@ HTML代码：
 <input id="city" />
 ```
 Javascript代码：
+1）本地数据模式
+```javascript
+$('#city').mAutocomplete({
+	source: ['深圳', '北京', '上海', '杭州', '珠海'],
+	onSelect: function(el) {
+		alert(el.text());
+	}
+})
+```
+2）远程AJAX请求数据模式
 ```javascript
 $('#city').mAutocomplete({
 	source: function(request, response) {
@@ -148,9 +158,6 @@ onSelect: function(el) {
 #### 1. 服务端返回的数据结构跟插件要求的不匹配怎么办？ ####
 答：在source配置项中，接受到服务端返回的数据后，可自行对其进行重新组装，在组装好后再将其作为参数调用response即可。注意response的参数必须是数组，且数组的每一项皆为对象，如：`[{value:1,title:aa},{...}]`，此时，在配置项`itemTemplate`中就可以很方便地用`{{value}}`或`{{title}}`进行值的调用从而生成列表。
 
-#### 2. 我的数据不需要服务器返回，是静态的存于本地的，怎么使用这个插件？ ####
-答：为了保持代码的简洁性，本版本暂不支持该功能哈，考虑后续增加。
 
-
-  [1]: http://ivinjs.com/demo/mobileAutocomplete/demo3.png
+  [1]: http://ivinjs.com/demo/mobileAutocomplete/demo.png
   [2]: http://ivinjs.com/demo/mobileAutocomplete/code.png
