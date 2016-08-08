@@ -22,7 +22,8 @@
 
 或手机访问：
 
-http://ivinjs.com/demo/mobileAutocomplete/
+http://ivinwu.github.io/mobileAutocomplete/remote.html
+http://ivinwu.github.io/mobileAutocomplete/local.html
 
 
 ###如何使用
@@ -159,5 +160,5 @@ onSelect: function(el) {
 答：在source配置项中，接受到服务端返回的数据后，可自行对其进行重新组装，在组装好后再将其作为参数调用response即可。注意response的参数必须是数组，且数组的每一项皆为对象，如：`[{value:1,title:aa},{...}]`，此时，在配置项`itemTemplate`中就可以很方便地用`{{value}}`或`{{title}}`进行值的调用从而生成列表。
 
 
-  [1]: http://ivinjs.com/demo/mobileAutocomplete/demo.png
-  [2]: http://ivinjs.com/demo/mobileAutocomplete/code.png
+  [1]: http://ivinwu.github.io/mobileAutocomplete/img/demo2.png
+  [2]: http://ivinwu.github.io/mobileAutocomplete/img/code.png
