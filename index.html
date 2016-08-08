@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Mobileautocomplete by IvinWu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Mobileautocomplete</h1>
+      <h2 class="project-tagline">autocomplete suggestion mobile-first 自动补全</h2>
+      <a href="https://github.com/IvinWu/mobileAutocomplete" class="btn">View on GitHub</a>
+      <a href="https://github.com/IvinWu/mobileAutocomplete/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/IvinWu/mobileAutocomplete/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="mobileautocomplete" class="anchor" href="#mobileautocomplete" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>mobileAutocomplete</h1>
+
+<p>传统autocomplete插件多数基于PC端，依赖jquery，体积庞大；本插件基于移动设备特性制作，跟DOM元素基本解耦（DOM及样式可完全自定义），拓展性强，压缩后体积只有2KB，非常适合移动应用使用（依赖zeptojs，当然jquery也是可以的）。</p>
+
+<p>用户在输入框中输入内容的过程中，调用服务端接口，实时将匹配的内容返回并显示出下拉列表，提供给用户选择，提高用户的输入效率，在移动端打字不方便的背景下，该功能的需求非常庞大。</p>
+
+<hr>
+
+<h3>
+<a id="展示效果" class="anchor" href="#%E5%B1%95%E7%A4%BA%E6%95%88%E6%9E%9C" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>展示效果</h3>
+
+<p><img src="http://ivinjs.com/demo/mobileAutocomplete/demo.png" alt="展示效果"></p>
+
+<hr>
+
+<h3>
+<a id="demo" class="anchor" href="#demo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>DEMO</h3>
+
+<p>手机扫二维码：</p>
+
+<p><img src="http://ivinjs.com/demo/mobileAutocomplete/code.png" alt="二维码"></p>
+
+<p>或手机访问：</p>
+
+<p><a href="http://ivinjs.com/demo/mobileAutocomplete/">http://ivinjs.com/demo/mobileAutocomplete/</a></p>
+
+<h3>
+<a id="如何使用" class="anchor" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>如何使用</h3>
+
+<p>HTML代码：</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">input</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>city<span class="pl-pds">"</span></span> /&gt;</pre></div>
+
+<p>Javascript代码：
+1）本地数据模式</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">'</span>#city<span class="pl-pds">'</span></span>).<span class="pl-en">mAutocomplete</span>({
+    source<span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">'</span>深圳<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>北京<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>上海<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>杭州<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>珠海<span class="pl-pds">'</span></span>],
+    <span class="pl-en">onSelect</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">el</span>) {
+        <span class="pl-en">alert</span>(<span class="pl-smi">el</span>.<span class="pl-c1">text</span>());
+    }
+})</pre></div>
+
+<p>2）远程AJAX请求数据模式</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">'</span>#city<span class="pl-pds">'</span></span>).<span class="pl-en">mAutocomplete</span>({
+    <span class="pl-en">source</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">request</span>, <span class="pl-smi">response</span>) {
+        <span class="pl-smi">$</span>.<span class="pl-en">ajax</span>({
+            url<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>http://gd.geobytes.com/AutoCompleteCity<span class="pl-pds">'</span></span>,
+            data<span class="pl-k">:</span> {
+                q<span class="pl-k">:</span> <span class="pl-smi">request</span>.<span class="pl-smi">term</span>
+            },
+            type<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>get<span class="pl-pds">'</span></span>,
+            dataType<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>jsonp<span class="pl-pds">'</span></span>,
+            <span class="pl-en">success</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">data</span>) {
+                <span class="pl-c">//由于接口返回的是数组[aa,bb,cc]，因此对其进行对象组装</span>
+                <span class="pl-k">var</span> array <span class="pl-k">=</span> [];
+                <span class="pl-k">for</span>(<span class="pl-k">var</span> i <span class="pl-k">=</span> <span class="pl-c1">0</span>; i <span class="pl-k">&lt;</span> <span class="pl-smi">data</span>.<span class="pl-c1">length</span>; i <span class="pl-k">++</span>) {
+                    <span class="pl-smi">array</span>.<span class="pl-c1">push</span>({
+                        value<span class="pl-k">:</span> data[i],
+                        title<span class="pl-k">:</span> data[i]
+                    })
+                }
+                <span class="pl-c">//将处理好的数组用response进行回调，此时数组格式为[{value:1,title:aa},{...}]</span>
+                <span class="pl-en">response</span>(array);
+            }
+        })
+    },
+    <span class="pl-en">onSelect</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">el</span>) {
+        <span class="pl-en">alert</span>(<span class="pl-smi">el</span>.<span class="pl-c1">text</span>());
+    }
+})</pre></div>
+
+<h3>
+<a id="可配置项" class="anchor" href="#%E5%8F%AF%E9%85%8D%E7%BD%AE%E9%A1%B9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>可配置项：</h3>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">/**</span>
+<span class="pl-c"> * 默认配置</span>
+<span class="pl-c"> */</span>
+<span class="pl-k">var</span> defaults <span class="pl-k">=</span> {
+    <span class="pl-c">//当输入字符达minChars时，开始触发autocomplete</span>
+    minChars<span class="pl-k">:</span> <span class="pl-c1">2</span>,
+    <span class="pl-c">//请求配置函数</span>
+    source<span class="pl-k">:</span> <span class="pl-c1">null</span>,
+    <span class="pl-c">//选择选项后触发事件</span>
+    onSelect<span class="pl-k">:</span> <span class="pl-c1">null</span>,
+    <span class="pl-c">//当input聚焦时，是否自动将input滚动到页面顶部（防止移动设备弹出键盘挡住）</span>
+    scrollOnFocus<span class="pl-k">:</span> <span class="pl-c1">true</span>,
+    <span class="pl-c">//最多显示maxItems条匹配记录</span>
+    maxItems<span class="pl-k">:</span> <span class="pl-c1">10</span>,
+    <span class="pl-c">//input改变后keyboardDelay毫秒后触发服务器请求，防止过于频繁的请求</span>
+    keyboardDelay<span class="pl-k">:</span> <span class="pl-c1">300</span>,
+    <span class="pl-c">//选择选项后，列表是否自动消失</span>
+    closeOnSelect<span class="pl-k">:</span> <span class="pl-c1">true</span>,
+    <span class="pl-c">//ul的模板</span>
+    ulTemplate<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>&lt;ul class="autocomplete-list"&gt;&lt;/ul&gt;<span class="pl-pds">'</span></span>,
+    <span class="pl-c">//单独一个选项的模板</span>
+    itemTemplate<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>&lt;li class="autocomplete-item"&gt;{{title}}&lt;/li&gt;<span class="pl-pds">'</span></span>,
+    <span class="pl-c">//整个ul将插入到parent这个DOM中</span>
+    parent<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>body<span class="pl-pds">'</span></span>
+}</pre></div>
+
+<h4>
+<a id="关于配置项parent的说明" class="anchor" href="#%E5%85%B3%E4%BA%8E%E9%85%8D%E7%BD%AE%E9%A1%B9parent%E7%9A%84%E8%AF%B4%E6%98%8E" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>关于配置项parent的说明</h4>
+
+<p>parent默认值是body，即默认生成的下拉列表是会append到页面的body下的，如有其他特殊需求，如DOM结构是这样的</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>autocompleteUl<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">ul</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>search-list<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">li</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>keyword<span class="pl-pds">"</span></span>&gt;XXXX&lt;/<span class="pl-ent">li</span>&gt;
+        &lt;<span class="pl-ent">li</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>keyword<span class="pl-pds">"</span></span>&gt;XXXX&lt;/<span class="pl-ent">li</span>&gt;
+        ...
+    &lt;/<span class="pl-ent">ul</span>&gt;
+&lt;/<span class="pl-ent">div</span>&gt;</pre></div>
+
+<p>则可以在初始化的时候设定parent的值为 “#autocompleteUl”</p>
+
+<h4>
+<a id="关于配置项ultemplate和itemtemplate的说明" class="anchor" href="#%E5%85%B3%E4%BA%8E%E9%85%8D%E7%BD%AE%E9%A1%B9ultemplate%E5%92%8Citemtemplate%E7%9A%84%E8%AF%B4%E6%98%8E" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>关于配置项ulTemplate和itemTemplate的说明</h4>
+
+<p>ulTemplate的默认值是<code>&lt;ul class="autocomplete-list"&gt;&lt;/ul&gt;</code>，itemTemplate的默认值是<code>&lt;li class="autocomplete-item"&gt;{{title}}&lt;/li&gt;</code>，如有其他需求，如需上面举例的DOM结构，则可在初始化时候设定</p>
+
+<div class="highlight highlight-source-js"><pre>{
+    ulTemplate<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>&lt;ul class="search-list"&gt;&lt;/ul&gt;<span class="pl-pds">'</span></span>,
+    itemTemplate<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>&lt;li class="keyword"&gt;{{title}}&lt;/li&gt;<span class="pl-pds">'</span></span>
+}</pre></div>
+
+<h4>
+<a id="关于配置项onselect的说明" class="anchor" href="#%E5%85%B3%E4%BA%8E%E9%85%8D%E7%BD%AE%E9%A1%B9onselect%E7%9A%84%E8%AF%B4%E6%98%8E" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>关于配置项onSelect的说明</h4>
+
+<p>该配置项为函数，指定了用户点击了某个下拉列表后会触发的事件，其中带有一个参数el为用户点击项的DOM对象，可通过往列表DOM中的属性种入各种自定义值，并在onSelect触发时从DOM属性中取出使用。如</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">onSelect</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">el</span>) {
+    <span class="pl-c">//打印被选中的选项的value属性</span>
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">el</span>.<span class="pl-en">attr</span>(<span class="pl-s"><span class="pl-pds">'</span>value<span class="pl-pds">'</span></span>))
+}</pre></div>
+
+<h4>
+<a id="关于配置项source的说明" class="anchor" href="#%E5%85%B3%E4%BA%8E%E9%85%8D%E7%BD%AE%E9%A1%B9source%E7%9A%84%E8%AF%B4%E6%98%8E" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>关于配置项source的说明</h4>
+
+<p>该配置项为函数，确定了与服务器之前的接口。该配置参照了JqueryUI中的Autocomplete，有两个参数<code>request</code>和<code>response</code>，其中<code>request.term</code>中装载着当前input的值，而返回的结果需要用<code>response</code>进行回调。</p>
+
+<div class="highlight highlight-source-js"><pre>    <span class="pl-en">source</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">request</span>, <span class="pl-smi">response</span>) {
+        <span class="pl-smi">$</span>.<span class="pl-en">ajax</span>({
+            url<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>http://gd.geobytes.com/AutoCompleteCity<span class="pl-pds">'</span></span>,
+            data<span class="pl-k">:</span> {
+                q<span class="pl-k">:</span> <span class="pl-smi">request</span>.<span class="pl-smi">term</span>
+            },
+            type<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>get<span class="pl-pds">'</span></span>,
+            dataType<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>jsonp<span class="pl-pds">'</span></span>,
+            <span class="pl-en">success</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">data</span>) {
+                <span class="pl-c">//由于接口返回的是数组[aa,bb,cc]，因此对其进行对象组装</span>
+                <span class="pl-k">var</span> array <span class="pl-k">=</span> [];
+                <span class="pl-k">for</span>(<span class="pl-k">var</span> i <span class="pl-k">=</span> <span class="pl-c1">0</span>; i <span class="pl-k">&lt;</span> <span class="pl-smi">data</span>.<span class="pl-c1">length</span>; i <span class="pl-k">++</span>) {
+                    <span class="pl-smi">array</span>.<span class="pl-c1">push</span>({
+                        value<span class="pl-k">:</span> data[i],
+                        title<span class="pl-k">:</span> data[i]
+                    })
+                }
+                <span class="pl-c">//将处理好的数组用response进行回调，此时数组格式为[{value:aa,title:aa},{...}]</span>
+                <span class="pl-en">response</span>(array);
+            }
+        })
+    }</pre></div>
+
+<h3>
+<a id="qa" class="anchor" href="#qa" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Q&amp;A</h3>
+
+<h4>
+<a id="1-服务端返回的数据结构跟插件要求的不匹配怎么办" class="anchor" href="#1-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%BF%94%E5%9B%9E%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%B7%9F%E6%8F%92%E4%BB%B6%E8%A6%81%E6%B1%82%E7%9A%84%E4%B8%8D%E5%8C%B9%E9%85%8D%E6%80%8E%E4%B9%88%E5%8A%9E" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>1. 服务端返回的数据结构跟插件要求的不匹配怎么办？</h4>
+
+<p>答：在source配置项中，接受到服务端返回的数据后，可自行对其进行重新组装，在组装好后再将其作为参数调用response即可。注意response的参数必须是数组，且数组的每一项皆为对象，如：<code>[{value:1,title:aa},{...}]</code>，此时，在配置项<code>itemTemplate</code>中就可以很方便地用<code>{{value}}</code>或<code>{{title}}</code>进行值的调用从而生成列表。</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/IvinWu/mobileAutocomplete">Mobileautocomplete</a> is maintained by <a href="https://github.com/IvinWu">IvinWu</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
