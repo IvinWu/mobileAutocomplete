@@ -22,8 +22,8 @@
 
 或手机访问：
 
-http://ivinwu.github.io/mobileAutocomplete/remote.html
-http://ivinwu.github.io/mobileAutocomplete/local.html
+- http://ivinwu.github.io/mobileAutocomplete/remote.html
+- http://ivinwu.github.io/mobileAutocomplete/local.html
 
 
 ###如何使用
@@ -32,6 +32,7 @@ HTML代码：
 <input id="city" />
 ```
 Javascript代码：
+
 1）本地数据模式
 ```javascript
 $('#city').mAutocomplete({
