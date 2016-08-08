@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1, minimum-scale=1.0, maximum-scale=1, user-scalable=no"/>
+    <title>Mobile Autocomplete - DEMO</title>
+    <style type="text/css">
+        h1 {font-size: 1.2em;text-align: center;}
+        ul, ol, li {list-style: none;}
+        .autocomplete-list {padding:0;}
+        .autocomplete-item {height: 18px;padding: 11px 16px 11px 0;border-bottom: 1px solid #ebebeb;}
+        #city {width: 94%;margin-top: 20px;font-size: 1.1em;padding: 3%;}
+    </style>
+</head>
+<body>
+<h1>Mobile Autocomplete - local data - DEMO</h1>
+<div class="ui-widget">
+    <label for="city">输入一个城市名(如“深圳”): </label>
+    <input id="city" />
+</div>
+
+<script type="text/javascript" src="http://zeptojs.com/zepto.min.js"></script>
+<script type="text/javascript" src="js/mobileAutocomplete.min.js"></script>
+<script type="text/javascript">
+    
+	$('#city').mAutocomplete({
+		source: ['深圳', '北京', '上海'],
+		minChars: 1,
+		onSelect: function(el) {
+			alert(el.text());
+		}
+	})
+
+</script>
+ 
+</body>
+</html>
