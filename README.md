@@ -16,11 +16,6 @@
 ----------
 
 ###DEMO
-手机扫二维码：
-
-![二维码][2]
-
-或手机访问：
 
 - http://ivinwu.github.io/mobileAutocomplete/remote.html
 - http://ivinwu.github.io/mobileAutocomplete/local.html
@@ -162,4 +157,3 @@ onSelect: function(el) {
 
 
   [1]: http://ivinwu.github.io/mobileAutocomplete/img/demo2.png
-  [2]: http://ivinwu.github.io/mobileAutocomplete/img/code.png
